@@ -8,10 +8,10 @@ require 'shellwords'
 # copy_file and template resolve against our source files. If this file was
 # invoked remotely via HTTP, that means the files are not present locally.
 # In that case, use `git clone` to download them to a local temporary dir.
-def add_generator_repository_to_source_path
+def add_template_repository_to_source_path
   if __FILE__ =~ %r{\Ahttps?://}
     require 'tmpdir'
-    source_paths.unshift(tempdir = Dir.mktmpdir('docker-development-railsbyte-'))
+    source_paths.unshift(tempdir = Dir.mktmpdir('Docker-Development-Railsbyte-'))
     at_exit { FileUtils.remove_entry(tempdir) }
     git clone: [
       '--quiet',
@@ -19,7 +19,7 @@ def add_generator_repository_to_source_path
       tempdir
     ].map(&:shellescape).join(' ')
 
-    if (branch = __FILE__[%r{Docker-Development-Railsbyte/(.+)/generator.rb}, 1])
+    if (branch = __FILE__[%r{Docker-Development-Railsbyte/(.+)/template.rb}, 1])
       Dir.chdir(tempdir) { git checkout: branch }
     end
   else
@@ -155,6 +155,7 @@ def postgres_name_ask(username)
   ask("#{question} #{format} #{note}", default: username)
 end
 
+TEMPLATE_DIR = 'templates'
 def copy_templates(files)
   puts files.values
   if no?('The above files will be overwritten / created. Is this okay? (yes / no):')
@@ -162,7 +163,7 @@ def copy_templates(files)
   end
 
   run "touch #{files.values.join(' ')}"
-  files.values.each { |file| copy_file(file) }
+  files.values.each { |file| copy_file(File.join(TEMPLATE_DIR, file)) }
 end
 
 def set_file_defaults
@@ -214,8 +215,7 @@ after_bundle do
 
   ask_questions if no?('Would you like to use the defaults? (yes / no)')
 
-  copy_templates
-  # GSUB TEMPLATES
+  copy_templates(@files)
 
   say
   say 'Successfully added Docker to your project!'
