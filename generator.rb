@@ -106,13 +106,9 @@ def original_generation_of_files
   end
 
   create_file FILES[:ENTRYPOINT_SCRIPT] do
-    <<~EOF
-    EOF
   end
 
   create_file FILES[:DATABASE_FILE] do
-    <<~EOF
-    EOF
   end
 end
 
