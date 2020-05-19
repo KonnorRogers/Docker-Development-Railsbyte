@@ -36,6 +36,7 @@ services:
   db:
     image: postgres:<postgres_version>
     environment:
+      POSTGRES_USER: <postgres_user>
       POSTGRES_PASSWORD: <postgres_password>
     volumes:
       - db_data:/var/lib/postgresql/data
