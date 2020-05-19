@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  web:
+    environment:
+      NODE_ENV: development
+      RAILS_ENV: development
+      WEBPACKER_DEV_SERVER_HOST: 0.0.0.0
+      POSTGRES_USER: <postgres_user>
+      POSTGRES_PASSWORD: <postgres_password>
+
+    build:
+      context: .
+      dockerfile: <dockerfile>
+      args:
+        USER_ID: <user_id>
+        GROUP_ID: <group_id>
+        APP_DIR: <app_dir>
+
+    command: bash -c "rm -f tmp/pids/server.pid &&
+                      ./bin/webpack-dev-server --port <webpacker_port> &
+                      bundle exec rails server -p <rails_port> -b '0.0.0.0'"
+
+    volumes:
+      # make sure this lines up with APP_DIR above
+      - .:<app_dir>
+      - node_modules:<app_dir>/node_modules
+
+    ports:
+      - "<rails_port>:<rails_port>"
+      - "<webpacker_port>:<webpacker_port>"
+
+    depends_on:
+      - db
+
+  db:
+    image: postgres:<postgres_version>
+    environment:
+      POSTGRES_PASSWORD: <postgres_password>
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+
+volumes:
+  db_data:
+  node_modules:

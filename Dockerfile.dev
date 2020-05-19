@@ -1,0 +1,66 @@
+# Anything delimited by '<' '>' Will be gsubbed at runtime
+# Pre setup stuff
+FROM ruby:<ruby_version> as builder
+
+# Add Yarn to the repository
+RUN curl https://deb.nodesource.com/setup_<node_version>.x | bash && \
+    curl https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+
+# Install system dependencies & clean them up
+# libnotify-dev is what allows you to watch file changes w/ HMR
+RUN apt-get update -qq && apt-get install -y \
+    postgresql-client build-essential yarn nodejs \
+    libnotify-dev && \
+    rm -rf /var/lib/apt/lists/*
+
+# This is where we build the rails app
+FROM builder as rails-app
+
+# Allow access to port 3000 & 3035
+EXPOSE <rails-port>
+EXPOSE <webpacker-port>
+
+# This is to fix an issue on Linux with permissions issues
+ARG USER_ID=<user_id>
+ARG GROUP_ID=<group_id>
+ARG APP_DIR=<app_dir>
+
+# Create a non-root user
+RUN groupadd --gid $GROUP_ID <username>
+RUN useradd --no-log-init --uid $USER_ID --gid $GROUP_ID <username> --create-home
+
+# Remove existing running server
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/<entrypoint_script>
+
+# fixing Permissions
+RUN mkdir -p $APP_DIR
+RUN chown -R $USER_ID:$GROUP_ID $APP_DIR
+
+# Define the user running the container
+USER $USER_ID:$GROUP_ID
+
+WORKDIR $APP_DIR
+
+# Install rails related dependencies
+COPY --chown=$USER_ID:$GROUP_ID Gemfile* $APP_DIR/
+
+# For webpacker / node_modules
+COPY --chown=$USER_ID:$GROUP_ID package.json $APP_DIR
+COPY --chown=$USER_ID:$GROUP_ID yarn.lock $APP_DIR
+
+# Fix an issue with outdated bundler
+RUN gem install bundler
+RUN bundle install
+
+# Copy over all files
+COPY --chown=$USER_ID:$GROUP_ID . .
+
+RUN yarn install --check-files
+
+
+ENTRYPOINT ["/usr/bin/<entrypoint_script>"]
+
+# Start the main process.
+CMD ["rails", "server", "-p", "<rails_port>", "-b", "0.0.0.0"]
