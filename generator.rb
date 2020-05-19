@@ -174,6 +174,7 @@ def original_generation_of_files
           volumes:
             # make sure this lines up with APP_DIR above
             - .:#{APP_DIR}
+            - node_modules:#{APP_DIR}/node_modules
 
           ports:
             - "#{PORTS[:RAILS]}:#{PORTS[:RAILS]}"
@@ -192,6 +193,7 @@ def original_generation_of_files
 
       volumes:
         db_data:
+        node_modules:
 
     EOF
   end
