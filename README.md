@@ -10,6 +10,16 @@ A way of setting up Docker in Development using a Rails generator thanks to rail
 rails app:template LOCATION="https://raw.githubusercontent.com/ParamagicDev/Docker-Development-Railsbyte/master/template.rb"
 ```
 
+## Notes
+
+Please note, we will not hard code your POSTGRES_PASSWORD into your
+`docker-compose.yml` file. Instead, you can set your
+`DOCKER_POSTGRES_PASSWORD` in your shell and `docker-compose.yml` will
+read its value when building the Postgres database.
+
+Alternatively, you can answer the prompt on the command line and we will
+set the `DOCKER_POSTGRES_PASSWORD` environment variable for you.
+
 ## Environment Variables
 
 ### Rails runtime
@@ -28,7 +38,8 @@ rails app:template LOCATION="https://raw.githubusercontent.com/ParamagicDev/Dock
 
 `DOCKER_POSTGRES_USER` Default: 'postgres' (You probably shouldnt change this)
 
-`DOCKER_POSTGRES_PASSWORD` Default: 'EXAMPLE'
+`DOCKER_POSTGRES_PASSWORD` No default given, the user must set this
+themselves.
 
 ### Docker Variables
 

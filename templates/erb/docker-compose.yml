@@ -7,7 +7,9 @@ services:
       RAILS_ENV: development
       WEBPACKER_DEV_SERVER_HOST: 0.0.0.0
       POSTGRES_USER: <%= @postgres_user %>
-      POSTGRES_PASSWORD: <%= @postgres_password %>
+      # ENV['DOCKER_POSTGRES_PASSWORD'] must be set. We dont want users hard coding
+      # their password into this Dockerfile
+      POSTGRES_PASSWORD: ${DOCKER_POSTGRES_PASSWORD}
 
     build:
       context: .
@@ -37,10 +39,9 @@ services:
     image: postgres:<%= @postgres_version %>
     environment:
       POSTGRES_USER: <%= @postgres_user %>
-      POSTGRES_PASSWORD: <%= @postgres_password %>
+      POSTGRES_PASSWORD: ${DOCKER_POSTGRES_PASSWORD}
     volumes:
       - db_data:/var/lib/postgresql/data
-
 
 volumes:
   db_data:

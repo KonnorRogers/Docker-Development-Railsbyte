@@ -7,7 +7,7 @@ services:
       RAILS_ENV: development
       WEBPACKER_DEV_SERVER_HOST: 0.0.0.0
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: EXAMPLE
+      POSTGRES_PASSWORD: ${DOCKER_POSTGRES_PASSWORD}
 
     build:
       context: .
@@ -37,7 +37,7 @@ services:
     image: postgres:12
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: EXAMPLE
+      POSTGRES_PASSWORD: ${DOCKER_POSTGRES_PASSWORD}
     volumes:
       - db_data:/var/lib/postgresql/data
 
