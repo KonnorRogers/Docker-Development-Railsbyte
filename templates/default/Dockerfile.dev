@@ -32,8 +32,8 @@ RUN groupadd --gid $GROUP_ID user
 RUN useradd --no-log-init --uid $USER_ID --gid $GROUP_ID user --create-home
 
 # Remove existing running server
-COPY {:dockerfile=>"Dockerfile.dev", :docker_compose=>"docker-compose.yml", :docker_ignore=>".dockerignore", :entrypoint_script=>"entrypoint.sh", :database_files=>"config/database.yml"} /usr/bin/
-RUN chmod +x /usr/bin/{:dockerfile=>"Dockerfile.dev", :docker_compose=>"docker-compose.yml", :docker_ignore=>".dockerignore", :entrypoint_script=>"entrypoint.sh", :database_files=>"config/database.yml"}
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
 
 # fixing Permissions
 RUN mkdir -p $APP_DIR
@@ -61,7 +61,7 @@ COPY --chown=$USER_ID:$GROUP_ID . .
 RUN yarn install --check-files
 
 
-ENTRYPOINT ["/usr/bin/{:dockerfile=>"Dockerfile.dev", :docker_compose=>"docker-compose.yml", :docker_ignore=>".dockerignore", :entrypoint_script=>"entrypoint.sh", :database_files=>"config/database.yml"}"]
+ENTRYPOINT ["/usr/bin/entrypoint.sh"]
 
 # Start the main process.
 CMD ["rails", "server", "-p", "3000", "-b", "0.0.0.0"]
