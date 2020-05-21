@@ -1,10 +1,10 @@
-# Anything delimited by <%= @instance_variable %> Will be replaced at with the
+# Anything delimited by  Will be replaced at with the
 # corresponding value
 # Pre setup stuff
-FROM ruby:2.6.3 as builder
+FROM ruby: as builder
 
 # Add Yarn to the repository
-RUN curl https://deb.nodesource.com/setup_12.x | bash && \
+RUN curl https://deb.nodesource.com/setup_.x | bash && \
     curl https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 
@@ -19,21 +19,21 @@ RUN apt-get update -qq && apt-get install -y \
 FROM builder as rails-app
 
 # Allow access to port 3000 & 3035
-EXPOSE 3000
-EXPOSE 3035
+EXPOSE 
+EXPOSE 
 
 # This is to fix an issue on Linux with permissions issues
-ARG USER_ID=1000
-ARG GROUP_ID=1000
-ARG APP_DIR=/home/user/myapp
+ARG USER_ID=
+ARG GROUP_ID=
+ARG APP_DIR=
 
 # Create a non-root user
-RUN groupadd --gid $GROUP_ID user
-RUN useradd --no-log-init --uid $USER_ID --gid $GROUP_ID user --create-home
+RUN groupadd --gid $GROUP_ID 
+RUN useradd --no-log-init --uid $USER_ID --gid $GROUP_ID  --create-home
 
 # Remove existing running server
-COPY <%= @files[:entrypoint_script] %> /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh %>
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
 
 # fixing Permissions
 RUN mkdir -p $APP_DIR
@@ -64,4 +64,4 @@ RUN yarn install --check-files
 ENTRYPOINT ["/usr/bin/entrypoint.sh"]
 
 # Start the main process.
-CMD ["rails", "server", "-p", "3000", "-b", "0.0.0.0"]
+CMD ["rails", "server", "-p", "", "-b", "0.0.0.0"]

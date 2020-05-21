@@ -6,41 +6,42 @@ services:
       NODE_ENV: development
       RAILS_ENV: development
       WEBPACKER_DEV_SERVER_HOST: 0.0.0.0
-      POSTGRES_USER: postgres
+      POSTGRES_USER: 
+      # ENV['DOCKER_POSTGRES_PASSWORD'] must be set. We dont want users hard coding
+      # their password into this Dockerfile
       POSTGRES_PASSWORD: ${DOCKER_POSTGRES_PASSWORD}
 
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: 
       args:
-        USER_ID: 1000
-        GROUP_ID: 1000
-        APP_DIR: /home/user/myapp
+        USER_ID: 
+        GROUP_ID: 
+        APP_DIR: 
 
     command: bash -c "rm -f tmp/pids/server.pid &&
-                      ./bin/webpack-dev-server --port 3035 &
-                      bundle exec rails server -p 3000 -b '0.0.0.0'"
+                      ./bin/webpack-dev-server --port  &
+                      bundle exec rails server -p  -b '0.0.0.0'"
 
     volumes:
       # make sure this lines up with APP_DIR above
-      - .:/home/user/myapp
-      - node_modules:/home/user/myapp/node_modules
+      - .:
+      - node_modules:/node_modules
 
     ports:
-      - "3000:3000"
-      - "3035:3035>"
+      - ":"
+      - ":"
 
     depends_on:
       - db
 
   db:
-    image: postgres:12
+    image: postgres:
     environment:
-      POSTGRES_USER: postgres
+      POSTGRES_USER: 
       POSTGRES_PASSWORD: ${DOCKER_POSTGRES_PASSWORD}
     volumes:
       - db_data:/var/lib/postgresql/data
-
 
 volumes:
   db_data:
