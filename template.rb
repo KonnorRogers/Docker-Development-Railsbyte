@@ -91,7 +91,6 @@ end
 # Main
 add_template_repository_to_source_path
 
-after_bundle do
 
   assert_minimum_rails_version(RAILS_REQUIREMENT[0], RAILS_REQUIREMENT[1])
   assert_minimum_ruby_version(RUBY_REQUIREMENT)
@@ -106,4 +105,3 @@ after_bundle do
   say 'Successfully added Docker to your project!'
   say 'To get started with Docker:', :blue
   say 'docker-compose up --build'
-end
