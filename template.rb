@@ -75,8 +75,6 @@ end
 # Main
 add_template_repository_to_source_path
 
-require_relative 'lib/questions'
-require_relative 'lib/utils'
 after_bundle do
   assert_minimum_ruby_version(RUBY_REQUIREMENT)
   assert_minimum_rails_version(RAILS_REQUIREMENT[0], RAILS_REQUIREMENT[1])
@@ -92,3 +90,5 @@ after_bundle do
   say 'To get started with Docker:', :blue
   say 'docker-compose up --build'
 end
+
+puts 'hi'
