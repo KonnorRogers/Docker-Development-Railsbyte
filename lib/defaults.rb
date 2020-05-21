@@ -29,13 +29,13 @@ end
 # Abstracted away due to rubocop complaint
 def set_docker_user_defaults
   @user_id =  ENV['DOCKER_USER_ID'] || Process.uid || 1000
-  @group_id = ENV ['DOCKER_GROUP_ID'] || Process.gid || 1000
+  @group_id = ENV['DOCKER_GROUP_ID'] || Process.gid || 1000
   @username = ENV['DOCKER_USERNAME'] || 'user'
 end
 
 def set_docker_defaults
   set_docker_user_defaults
-  @app_dir = ENV['DOCKER_APP_DIR'] || "/home/#{DOCKER_USERNAME}/myapp"
+  @app_dir = ENV['DOCKER_APP_DIR'] || "/home/#{@username}/myapp"
 end
 
 def set_defaults

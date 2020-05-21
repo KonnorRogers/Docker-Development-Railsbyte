@@ -54,8 +54,8 @@ def copy_templates(files)
 
   run "touch #{files.values.join(' ')}"
   files.values.each do |file|
-    filename = File.join(TEMPLATE_DIR, 'erb', file)
-    copy_file(File.read(filename))
+    filename = File.join(File.expand_path(__dir__), TEMPLATE_DIR, 'erb', file)
+    copy_file(ERB.new(File.read(filename)))
   end
 end
 
@@ -88,18 +88,18 @@ end
 # Main
 add_template_repository_to_source_path
 
-after_bundle do
-  assert_minimum_ruby_version(RUBY_REQUIREMENT)
-  assert_minimum_rails_version(RAILS_REQUIREMENT[0], RAILS_REQUIREMENT[1])
+# after_bundle do
+assert_minimum_rails_version(RAILS_REQUIREMENT[0], RAILS_REQUIREMENT[1])
+assert_minimum_ruby_version(RUBY_REQUIREMENT)
 
-  set_defaults
+set_defaults
 
-  ask_questions if no?('Would you like to use the defaults? (yes / no)')
+ask_questions if no?('Would you like to use the defaults? (yes / no)')
 
-  copy_templates(@files)
+copy_templates(@files)
 
-  say
-  say 'Successfully added Docker to your project!'
-  say 'To get started with Docker:', :blue
-  say 'docker-compose up --build'
-end
+say
+say 'Successfully added Docker to your project!'
+say 'To get started with Docker:', :blue
+say 'docker-compose up --build'
+# end
