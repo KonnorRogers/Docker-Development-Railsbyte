@@ -83,7 +83,7 @@ end
 
 def ask_questions
   ask_rails_runtime_questions
-  ask_postgres_question
+  ask_postgres_questions
   ask_docker_questions
 end
 

@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
 def ruby_version_ask(ruby_version)
-  question = 'What version of Ruby would you like in your Dockerfile?'
+  question = "\nWhat version of Ruby would you like in your Dockerfile?"
   format = '[2.7, 2.7.1, 2.7.2 etc]'
-  note = "\n Be aware, if this does not match the Ruby Version in your Gemfile
-         you will encounter errors"
+  note = "\n Be aware, if this does not match the Ruby Version in your Gemfile" \
+         ' you will encounter errors'
 
-  ask("#{question} #{format} #{note}", default: ruby_version)
+  current = "\nYou are currently using: "
+
+  x = ask("#{note} #{question} #{format}", default: ruby_version)
+  puts x
 end
 
 def node_version_ask(node_version)
