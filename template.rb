@@ -91,16 +91,19 @@ end
 # Main
 add_template_repository_to_source_path
 
-assert_minimum_rails_version(RAILS_REQUIREMENT[0], RAILS_REQUIREMENT[1])
-assert_minimum_ruby_version(RUBY_REQUIREMENT)
+after_bundle do
 
-set_defaults
+  assert_minimum_rails_version(RAILS_REQUIREMENT[0], RAILS_REQUIREMENT[1])
+  assert_minimum_ruby_version(RUBY_REQUIREMENT)
 
-ask_questions if no?('Would you like to use the defaults? (yes / no)')
+  set_defaults
 
-copy_templates(@files)
+  ask_questions if no?('Would you like to use the defaults? (yes / no)')
 
-say
-say 'Successfully added Docker to your project!'
-say 'To get started with Docker:', :blue
-say 'docker-compose up --build'
+  copy_templates(@files)
+
+  say
+  say 'Successfully added Docker to your project!'
+  say 'To get started with Docker:', :blue
+  say 'docker-compose up --build'
+end
