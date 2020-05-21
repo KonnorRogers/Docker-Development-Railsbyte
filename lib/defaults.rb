@@ -44,3 +44,21 @@ def set_defaults
   set_postgres_defaults
   set_docker_defaults
 end
+
+# def get_all_defaults
+#   return {
+#   @files
+#   @ruby_version
+#   @node_version
+#   @rails_port
+#   @webpacker_port
+
+#   @postgres_version
+#   @postgres_user
+#   @postgres_password
+#   @user_id
+#   @group_id
+#   @username
+#   @app_dir
+#   }
+# end

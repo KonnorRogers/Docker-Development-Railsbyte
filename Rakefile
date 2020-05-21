@@ -17,22 +17,22 @@ class Hammer < Thor
 end
 
 # taken from "template.rb"
-def copy_templates(files)
+def copy_templates
   templates = File.join(File.expand_path(__dir__), 'templates')
+  set_defaults
 
   Hammer.source_root(File.join('templates', 'erb'))
 
-  files.values.each do |file|
+  @files.values.each do |file|
     dest_file = File.join(templates, 'default', file)
-    p dest_file
-    hammer :template, file, dest_file, verbose: true
+    hammer :template, file, dest_file, @files, verbose: true
   end
 end
 
 desc 'update default templates'
 task :update_default_templates do |_t|
   set_defaults
-  copy_templates(@files)
+  copy_templates
 end
 
 private

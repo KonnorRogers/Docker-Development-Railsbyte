@@ -32,8 +32,8 @@ RUN groupadd --gid $GROUP_ID <%= @username %>
 RUN useradd --no-log-init --uid $USER_ID --gid $GROUP_ID <%= @username %> --create-home
 
 # Remove existing running server
-COPY <%= entrypoint.sh %> /usr/bin/
-RUN chmod +x /usr/bin/<%= entrypoint.sh %>
+COPY <%= @files %> /usr/bin/
+RUN chmod +x /usr/bin/<%= @files %>
 
 # fixing Permissions
 RUN mkdir -p $APP_DIR
@@ -61,7 +61,7 @@ COPY --chown=$USER_ID:$GROUP_ID . .
 RUN yarn install --check-files
 
 
-ENTRYPOINT ["/usr/bin/<%= entrypoint.sh %>"]
+ENTRYPOINT ["/usr/bin/<%= @files %>"]
 
 # Start the main process.
 CMD ["rails", "server", "-p", "<%= @rails_port %>", "-b", "0.0.0.0"]
