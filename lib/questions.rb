@@ -15,44 +15,21 @@ def ruby_version_ask(ruby_version)
 end
 
 def node_version_ask(node_version)
-  question = 'What version of Node would you like to use in your Dockerfile?'
+  question = '\nWhat version of Node would you like to use in your Dockerfile?'
   format = '[12, 11, 10, etc]'
 
-  current = "\nYou are currently using: node"
+  current = "\nYou are currently using: node:"
   print("#{question} #{format} #{current}")
 
   ask('', default: node_version)
 end
 
-def app_dir_ask(app_dir)
-  question = 'Where would you like your app saved in your Dockerfile?'
-  format = '[/myapp]'
-  ask("#{question} #{format}", default: app_dir)
-end
-
-def id_ask(id, type)
-  question = "What #{type}_id would you like to use?"
-  format = '[1000, 2000, 3000, etc]'
-  ask("#{question} #{format}", default: id)
-end
-
-def user_id_ask(user_id)
-  id_ask(user_id, 'user')
-end
-
-def username_ask(username)
-  ask('What username would you like to use?', default: username)
-end
-
-def group_id_ask(group_id)
-  id_ask(group_id, 'group')
-end
-
 def port_ask(port, service)
-  question = "What port would you like to use for #{service}?"
+  question = "\nWhat port would you like to use for #{service}?"
   format = '[3000, 3035, 8000, 8080, etc]'
 
-  ask("#{question} #{format}", default: port)
+  print "#{question} #{format} the default port is:"
+  ask('', default: port)
 end
 
 def rails_port_ask(rails_port)
@@ -64,23 +41,59 @@ def webpacker_port_ask(webpacker_port)
 end
 
 def postgres_version_ask(version)
+  note = "\nPlease make sure the version you pick exists here: https://hub.docker.com/_/postgres"
   question = 'What version of postgres would you like to use?'
   format = '[12, 11, 10, etc]'
-  note = "\n Please make sure this version exists here: https://hub.docker.com/_/postgres"
-  ask("#{question} #{format} #{note}", default: version)
+  print "#{note} #{question} #{format} the default is:"
+
+  ask('', default: version)
 end
 
 def postgres_password_ask(password)
-  question = 'What password would you like to use for postgres?'
+  question = "\nWhat password would you like to use for postgres?"
   format = '[password1, password2, etc]'
-  ask("#{question} #{format}", default: password)
+  print "#{question} #{format} the default is set to:"
+  ask('', default: password)
 end
 
 def postgres_user_ask(username)
   question = 'What would you like to use as your Postgres username?'
   format = '[supercoolguy, databaseadmin, etc]'
-  note = "\n Be aware, there are issues with changing the Postgres username\n
-          https://hub.docker.com/_/postgres for full details"
+  note = "\nBe aware, there are issues with changing the Postgres username\n
+          visit https://hub.docker.com/_/postgres for full details"
 
-  ask("#{question} #{format} #{note}", default: username)
+  print "#{note} #{question} #{format} the default is:"
+  ask('', default: username)
+end
+
+def app_dir_ask(app_dir)
+  note = %(\nThe directory you specify will append to the value given for user)
+  question = 'Where would you like your app saved in your Dockerfile?'
+  format = '[/myapp, /rails-app, etc]'
+
+  print "#{note} #{question} #{format} the default is: "
+
+  ask('', default: app_dir)
+end
+
+def id_ask(id, type)
+  question = "What #{type}_id would you like to use?"
+  format = '[1000, 2000, 3000, etc]'
+  print "#{question} #{format}\nThe default is: "
+  ask('', default: id)
+end
+
+def user_id_ask(user_id)
+  id_ask(user_id, :user)
+end
+
+def group_id_ask(group_id)
+  id_ask(group_id, :group)
+end
+
+def username_ask(username)
+  question = "What username would you like to use?\n"
+  format = '[user, super-cool-guy, etc]'
+  print "#{question} #{format}\nThe default is:"
+  ask('', default: username)
 end
