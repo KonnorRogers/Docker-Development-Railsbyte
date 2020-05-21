@@ -29,10 +29,10 @@ def minimum_ruby_version(version)
   Gem::Requirement.new(version).satisfied_by? ruby_version
 end
 
-def assert_minimum_ruby_version
+def assert_minimum_ruby_version(version)
   return if minimum_ruby_version
 
-  prompt = "This template requires Ruby #{ruby_version}. "\
-           "You are using #{ruby_version}. Continue anyway?"
+  prompt = "This template requires Ruby #{version}. "\
+           "You are using #{version}. Continue anyway?"
   exit 1 if no?(prompt)
 end

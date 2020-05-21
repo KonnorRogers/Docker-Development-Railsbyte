@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'minitest/autorun'
+require 'test_helper'
 
 # Taken from https://github.com/excid3/jumpstart/blob/master/test/template_test.rb
 class TemplateTest < Minitest::Test
