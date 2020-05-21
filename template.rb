@@ -91,8 +91,6 @@ end
 # Main
 add_template_repository_to_source_path
 
-do_bundle
-
 assert_minimum_rails_version(RAILS_REQUIREMENT[0], RAILS_REQUIREMENT[1])
 assert_minimum_ruby_version(RUBY_REQUIREMENT)
 
