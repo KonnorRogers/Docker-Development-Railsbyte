@@ -72,7 +72,7 @@ def ask_questions
 end
 
 # Main
-add_generator_repository_to_source_path
+add_template_repository_to_source_path
 
 # Need to require here, otherwise will cause an error
 require_relative 'lib/questions.rb'
