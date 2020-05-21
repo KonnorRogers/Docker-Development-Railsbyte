@@ -2,8 +2,7 @@
 
 require 'fileutils'
 require 'shellwords'
-require 'erb'
-# Need to require here, otherwise will cause an error
+# require 'erb'
 
 RAILS_REQUIREMENT = ['>= 5.2.0', '< 7'].freeze
 RUBY_REQUIREMENT = '>= 2.5.0'
@@ -55,7 +54,9 @@ def copy_templates(files)
   run "touch #{files.values.join(' ')}"
   files.values.each do |file|
     filename = File.join(File.expand_path(__dir__), TEMPLATE_DIR, 'erb', file)
-    copy_file(ERB.new(File.read(filename)))
+    # erb_file = ERB.new(File.read(filename))
+    # erb_file.filename = filename
+    copy_file filename
   end
 end
 
