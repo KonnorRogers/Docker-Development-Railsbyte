@@ -9,7 +9,7 @@ RAILS_REQUIREMENT = ['>= 5.2.0', '< 7'].freeze
 RUBY_REQUIREMENT = '>= 2.5.0'
 TEMPLATE_DIR = 'templates'
 
-def require_files(tmpdir)
+def require_files(tmpdir = nil)
   base = File.join('lib', 'utils')
 
   return base if tmpdir.nil?
@@ -85,20 +85,18 @@ end
 # Main
 add_template_repository_to_source_path
 
-# after_bundle do
-#   assert_minimum_ruby_version(RUBY_REQUIREMENT)
-#   assert_minimum_rails_version(RAILS_REQUIREMENT[0], RAILS_REQUIREMENT[1])
+after_bundle do
+  assert_minimum_ruby_version(RUBY_REQUIREMENT)
+  assert_minimum_rails_version(RAILS_REQUIREMENT[0], RAILS_REQUIREMENT[1])
 
-#   set_defaults
+  set_defaults
 
-#   ask_questions if no?('Would you like to use the defaults? (yes / no)')
+  ask_questions if no?('Would you like to use the defaults? (yes / no)')
 
-#   copy_templates(@files)
+  copy_templates(@files)
 
-#   say
-#   say 'Successfully added Docker to your project!'
-#   say 'To get started with Docker:', :blue
-#   say 'docker-compose up --build'
-# end
-
-puts 'hi'
+  say
+  say 'Successfully added Docker to your project!'
+  say 'To get started with Docker:', :blue
+  say 'docker-compose up --build'
+end
