@@ -2,6 +2,7 @@
 
 require 'fileutils'
 require 'shellwords'
+require 'erb'
 
 RAILS_REQUIREMENT = ['>= 5.2.0', '< 7'].freeze
 RUBY_REQUIREMENT = '>= 2.5.0'
@@ -38,30 +39,44 @@ def copy_templates(files)
   end
 
   run "touch #{files.values.join(' ')}"
-  files.values.each { |file| copy_file(File.join(TEMPLATE_DIR, file)) }
+  files.values.each do |file|
+    filename = File.join(TEMPLATE_DIR, 'erb', file)
+    copy_file(File.read(filename))
+  end
 end
 
-def ask_questions
+def ask_rails_runtime_questions
   @ruby_version = ruby_version_ask(@ruby_version)
   @node_version = node_version_ask(@node_version)
-  @app_dir = app_dir_ask(@app_dir)
-  @user_id = user_id_ask(@user_id)
-  @group_id = group_id_ask(@group_id)
-  @username = username_ask(@username)
   @rails_port = rails_port_ask(@rails_port)
   @webpacker_port = webpacker_port_ask(@webpacker_port)
+end
+
+def ask_postgres_questions
   @postgres_version = postgres_version_ask(@postgres_version)
   @postgres_user = postgres_username_ask(@postgres_user)
   @postgres_password = postgres_password_ask(@postgres_password)
 end
 
+def ask_docker_questions
+  @username = username_ask(@username)
+  @app_dir = app_dir_ask(@app_dir)
+  @user_id = user_id_ask(@user_id)
+  @group_id = group_id_ask(@group_id)
+end
+
+def ask_questions
+  ask_rails_runtime_questions
+  ask_postgres_question
+  ask_docker_questions
+end
 
 # Main
 add_generator_repository_to_source_path
 
 # Need to require here, otherwise will cause an error
 require_relative 'lib/questions.rb'
-require_relative 'lib/utils.rb.rb'
+require_relative 'lib/utils.rb'
 
 after_bundle do
   assert_minimum_ruby_version(RUBY_REQUIREMENT)
