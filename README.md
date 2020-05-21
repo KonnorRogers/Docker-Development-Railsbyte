@@ -2,11 +2,13 @@
 
 A way of setting up Docker in Development using a Rails generator thanks to railsbyte.
 
+[https://railsbytes.com](https://railsbytes.com)
+
 ## Environment Variables
 
 ### Rails runtime
 
-`RUBY_VERSION` Default: (Whatever you're running Rails as)
+`RUBY_VERSION` Default: (Whatever you're RUBY_VERSION running Rails as)
 
 `NODE_VERSION` Default: '12'
 
