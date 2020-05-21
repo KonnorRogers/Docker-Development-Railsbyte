@@ -7,7 +7,7 @@ A way of setting up Docker in Development using a Rails generator thanks to rail
 ## Usage
 
 ```bash
-rails app:template LOCATION=""
+rails app:template LOCATION="https://raw.githubusercontent.com/ParamagicDev/Docker-Development-Railsbyte/master/template.rb"
 ```
 
 ## Environment Variables
