@@ -2,7 +2,6 @@
 
 require 'fileutils'
 require 'shellwords'
-# require 'erb'
 
 RAILS_REQUIREMENT = ['>= 5.2.0', '< 7'].freeze
 RUBY_REQUIREMENT = '>= 2.5.0'
