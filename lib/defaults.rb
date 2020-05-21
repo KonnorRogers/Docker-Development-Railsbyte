@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'environment_variables'
+
 def set_file_defaults
   @files = {
     dockerfile: 'Dockerfile.dev',
@@ -12,28 +14,28 @@ end
 
 def set_rails_runtime_defaults
   # User has to be running Ruby to use this
-  @ruby_version = RUBY_VERSION
-  @node_version = ENV['NODE_VERSION'] || '12'
-  @rails_port = ENV['RAILS_PORT'] || '3000'
-  @webpacker_port = ENV['WEBPACKER_PORT'] || '3035'
+  @ruby_version = get_env_var(:RUBY_VERSION)
+  @node_version = get_env_var(:NODE_VERSION) || '12'
+  @rails_port = get_env_var(:RAILS_PORT) || '3000'
+  @webpacker_port = get_env_var(:WEBPACKER_PORT) || '3035'
 end
 
 def set_postgres_defaults
-  @postgres_version = ENV['DOCKER_POSTGRES_VERSION'] || '12'
-  @postgres_user = ENV['DOCKER_POSTGRES_USER'] || 'postgres'
-  @postgres_password = ENV['DOCKER_POSTGRES_PASSWORD'] || 'EXAMPLE'
+  @postgres_version = get_env_var(:DOCKER_POSTGRES_VERSION) || '12'
+  @postgres_user = get_env_var(:DOCKER_POSTGRES_USER) || 'postgres'
+  @postgres_password = get_env_var(:DOCKER_POSTGRES_PASSWORD) || 'EXAMPLE'
 end
 
 # Abstracted away due to rubocop complaint
 def set_docker_user_defaults
-  @user_id =  ENV['DOCKER_USER_ID'] || Process.uid || 1000
-  @group_id = ENV['DOCKER_GROUP_ID'] || Process.gid || 1000
-  @username = ENV['DOCKER_USERNAME'] || 'user'
+  @user_id =  get_env_var(:DOCKER_USER_ID) || Process.uid || 1000
+  @group_id = get_env_var(:DOCKER_GROUP_ID) || Process.gid || 1000
+  @username = get_env_var(:DOCKER_USERNAME) || 'user'
 end
 
 def set_docker_defaults
   set_docker_user_defaults
-  @app_dir = ENV['DOCKER_APP_DIR'] || '/myapp'
+  @app_dir = get_env_var(:DOCKER_APP_DIR) || '/myapp'
 end
 
 def set_defaults

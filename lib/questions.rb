@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'environment_variables'
+
 def ruby_version_ask(ruby_version)
   question = "\nWhat version of Ruby would you like in your Dockerfile?"
   format = '[2.7, 2.7.1, 2.7.2 etc]'
@@ -66,7 +68,11 @@ def postgres_password_ask(password)
   question = "\nWhat password would you like to use for postgres?"
   format = "[password1, password2, etc]\n"
   print "#{question} #{format} the default is set to:"
-  ask('', default: password)
+
+  # Set echo to false so you cant see the user's password
+  postgres_password = ask('', default: password, echo: false)
+  set_env_var(:DOCKER_POSTGRES_PASSWORD, postgres_password)
+  print_env_vars
 end
 
 def username_ask(username)
