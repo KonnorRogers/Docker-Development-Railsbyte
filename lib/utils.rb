@@ -30,7 +30,7 @@ def minimum_ruby_version(version)
 end
 
 def assert_minimum_ruby_version(version)
-  return if minimum_ruby_version
+  return if minimum_ruby_version(version)
 
   prompt = "This template requires Ruby #{version}. "\
            "You are using #{version}. Continue anyway?"

@@ -3,6 +3,7 @@
 require 'fileutils'
 require 'shellwords'
 require 'erb'
+# Need to require here, otherwise will cause an error
 
 RAILS_REQUIREMENT = ['>= 5.2.0', '< 7'].freeze
 RUBY_REQUIREMENT = '>= 2.5.0'
@@ -74,10 +75,8 @@ end
 # Main
 add_template_repository_to_source_path
 
-# Need to require here, otherwise will cause an error
-require_relative 'lib/questions.rb'
-require_relative 'lib/utils.rb'
-
+require_relative 'lib/questions'
+require_relative 'lib/utils'
 after_bundle do
   assert_minimum_ruby_version(RUBY_REQUIREMENT)
   assert_minimum_rails_version(RAILS_REQUIREMENT[0], RAILS_REQUIREMENT[1])
