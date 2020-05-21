@@ -23,7 +23,7 @@ def copy_templates(files)
   Hammer.source_root(File.join('templates', 'erb'))
 
   files.values.each do |file|
-    dest_file = File.join('default', file)
+    dest_file = File.join(templates, 'default', file)
     hammer :template, file, { destination: dest_file, verbose: true }
   end
 end
