@@ -56,7 +56,7 @@ def copy_templates(files)
     filename = File.join(File.expand_path(__dir__), TEMPLATE_DIR, 'erb', file)
     # erb_file = ERB.new(File.read(filename))
     # erb_file.filename = filename
-    copy_file filename
+    copy_file(filename, file)
   end
 end
 
