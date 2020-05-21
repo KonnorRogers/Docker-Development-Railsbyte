@@ -70,7 +70,7 @@ end
 
 def ask_postgres_questions
   @postgres_version = postgres_version_ask(@postgres_version)
-  @postgres_user = postgres_username_ask(@postgres_user)
+  @postgres_user = postgres_user_ask(@postgres_user)
   @postgres_password = postgres_password_ask(@postgres_password)
 end
 

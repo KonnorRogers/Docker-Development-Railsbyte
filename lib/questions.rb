@@ -3,24 +3,30 @@
 def ruby_version_ask(ruby_version)
   question = "\nWhat version of Ruby would you like in your Dockerfile?"
   format = '[2.7, 2.7.1, 2.7.2 etc]'
-  note = "\n Be aware, if this does not match the Ruby Version in your Gemfile" \
+  note = "\nBe aware, if this does not match the Ruby Version in your Gemfile" \
          ' you will encounter errors'
 
-  current = "\nYou are currently using: "
+  current = "\nYou are currently using: ruby"
 
-  x = ask("#{note} #{question} #{format}", default: ruby_version)
-  puts x
+  str = "#{note} #{question} #{format} #{current}"
+
+  print str
+  ask('', default: ruby_version)
 end
 
 def node_version_ask(node_version)
   question = 'What version of Node would you like to use in your Dockerfile?'
   format = '[12, 11, 10, etc]'
-  ask("#{question} #{format}", default: node_version)
+
+  current = "\nYou are currently using: node"
+  print("#{question} #{format} #{current}")
+
+  ask('', default: node_version)
 end
 
 def app_dir_ask(app_dir)
   question = 'Where would you like your app saved in your Dockerfile?'
-  format = '[/home/user/myapp]'
+  format = '[/myapp]'
   ask("#{question} #{format}", default: app_dir)
 end
 
@@ -70,7 +76,7 @@ def postgres_password_ask(password)
   ask("#{question} #{format}", default: password)
 end
 
-def postgres_name_ask(username)
+def postgres_user_ask(username)
   question = 'What would you like to use as your Postgres username?'
   format = '[supercoolguy, databaseadmin, etc]'
   note = "\n Be aware, there are issues with changing the Postgres username\n
