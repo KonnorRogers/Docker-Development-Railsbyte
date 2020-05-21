@@ -25,8 +25,7 @@ def copy_templates(files)
   files.values.each do |file|
     dest_file = File.join(templates, 'default', file)
     filename = File.join(templates, 'erb', file)
-    hammer :remove_file dest_file
-    hammer :template, filename, destination: dest_file, verbose: true
+    hammer :template, filename, { destination: dest_file, verbose: true }
   end
 end
 
