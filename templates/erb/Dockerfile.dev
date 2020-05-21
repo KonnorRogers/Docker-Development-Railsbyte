@@ -19,8 +19,8 @@ RUN apt-get update -qq && apt-get install -y \
 FROM builder as rails-app
 
 # Allow access to port 3000 & 3035
-EXPOSE <%= @rails-port %>
-EXPOSE <%= @webpacker-port %>
+EXPOSE <%= @rails_port %>
+EXPOSE <%= @webpacker_port %>
 
 # This is to fix an issue on Linux with permissions issues
 ARG USER_ID=<%= @user_id %>
@@ -32,8 +32,8 @@ RUN groupadd --gid $GROUP_ID <%= @username %>
 RUN useradd --no-log-init --uid $USER_ID --gid $GROUP_ID <%= @username %> --create-home
 
 # Remove existing running server
-COPY <%= @entrypoint_script %> /usr/bin/
-RUN chmod +x /usr/bin/<%= @entrypoint_script %>
+COPY <%= @files[:entrypoint_script] %> /usr/bin/
+RUN chmod +x /usr/bin/<%= @files[:entrypoint_script] %>
 
 # fixing Permissions
 RUN mkdir -p $APP_DIR
@@ -61,7 +61,7 @@ COPY --chown=$USER_ID:$GROUP_ID . .
 RUN yarn install --check-files
 
 
-ENTRYPOINT ["/usr/bin/<%= @entrypoint_script %>"]
+ENTRYPOINT ["/usr/bin/<%= @files[:entrypoint_script] %>"]
 
 # Start the main process.
 CMD ["rails", "server", "-p", "<%= @rails_port %>", "-b", "0.0.0.0"]

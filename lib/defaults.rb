@@ -14,10 +14,8 @@ def set_rails_runtime_defaults
   # User has to be running Ruby to use this
   @ruby_version = RUBY_VERSION
   @node_version = ENV['NODE_VERSION'] || '12'
-  @ports = {
-    rails: ENV['RAILS_PORT'] || '3000',
-    webpacker: ENV['WEBPACKER_PORT'] || '3035'
-  }
+  @rails_port = ENV['RAILS_PORT'] || '3000'
+  @webpacker_port = ENV['WEBPACKER_PORT'] || '3035'
 end
 
 def set_postgres_defaults

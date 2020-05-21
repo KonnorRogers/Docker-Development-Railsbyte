@@ -6,8 +6,8 @@ services:
       NODE_ENV: development
       RAILS_ENV: development
       WEBPACKER_DEV_SERVER_HOST: 0.0.0.0
-      POSTGRES_USER: <%= @postgres_user % %>
-      POSTGRES_PASSWORD: <%= @postgres_password % %>
+      POSTGRES_USER: <%= @postgres_user %>
+      POSTGRES_PASSWORD: <%= @postgres_password %>
 
     build:
       context: .
@@ -27,8 +27,8 @@ services:
       - node_modules:<%= @app_dir %>/node_modules
 
     ports:
-      - "<%= @rails_port >:<%= rails_port %>"
-      - "<%= @webpacker_port>:<%= webpacker_port %>"
+      - "<%= @rails_port %>:<%= @rails_port %>"
+      - "<%= @webpacker_port %>:<%= @webpacker_port %>"
 
     depends_on:
       - db
