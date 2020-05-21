@@ -54,10 +54,11 @@ end
 def postgres_user_ask(username)
   question = 'What would you like to use as your Postgres username?'
   format = "[supercoolguy, databaseadmin, etc]\n"
-  note = "\nBe aware, there are issues with changing the Postgres username\n" \
+  note = "Be aware, there are issues with changing the Postgres username\n" \
          "visit https://hub.docker.com/_/postgres for full details\n"
 
-  print "#{note} #{question} #{format} the default is:"
+  say note, :red
+  print "#{question} #{format} the default is:"
   ask('', default: username)
 end
 
@@ -88,7 +89,7 @@ end
 def id_ask(id, type)
   question = "What #{type}_id would you like to use?"
   format = '[1000, 2000, 3000, etc]'
-  print "#{question} #{format}\nWe detected your current #{type_id} is: "
+  print "#{question} #{format}\nWe detected your current #{type}_id is: "
   ask('', default: id)
 end
 
