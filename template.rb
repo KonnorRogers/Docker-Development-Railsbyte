@@ -10,11 +10,12 @@ RUBY_REQUIREMENT = '>= 2.5.0'
 TEMPLATE_DIR = 'templates'
 
 def require_files(tmpdir = nil)
-  base = File.join('lib', 'utils')
+  lib = 'lib'
+  files = %w[utils defaults questions]
 
-  return base if tmpdir.nil?
+  files.each { |file| require_relative File.join(lib, file) } if tmpdir.nil?
 
-  File.join(tmpdir, base)
+  files.each { |file| require_relative File.join(tmpdir, lib, file) }
 end
 
 # Copied from: https://github.com/mattbrictson/rails-template
