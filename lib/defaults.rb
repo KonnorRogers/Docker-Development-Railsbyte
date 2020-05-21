@@ -33,7 +33,7 @@ end
 
 def set_docker_defaults
   set_docker_user_defaults
-  @app_dir = ENV['DOCKER_APP_DIR'] || "/home/#{@username}/myapp"
+  @app_dir = ENV['DOCKER_APP_DIR'] || '/myapp'
 end
 
 def set_defaults

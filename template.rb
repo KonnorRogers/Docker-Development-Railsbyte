@@ -76,7 +76,9 @@ end
 
 def ask_docker_questions
   @username = username_ask(@username)
-  @app_dir = app_dir_ask(@app_dir)
+
+  # Becomes /home/#{username}/#{app_directory}
+  @app_dir = File.join('home', @username, app_dir_ask(@app_dir))
   @user_id = user_id_ask(@user_id)
   @group_id = group_id_ask(@group_id)
 end

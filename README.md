@@ -4,6 +4,12 @@ A way of setting up Docker in Development using a Rails generator thanks to rail
 
 [https://railsbytes.com](https://railsbytes.com)
 
+## Usage
+
+```bash
+rails app:template LOCATION=""
+```
+
 ## Environment Variables
 
 ### Rails runtime
