@@ -13,7 +13,9 @@ def require_files(tmpdir = nil)
   lib = 'lib'
   files = %w[utils defaults questions]
 
-  files.each { |file| require_relative File.join(lib, file) } if tmpdir.nil?
+  if tmpdir.nil?
+    return files.each { |file| require_relative File.join(lib, file) }
+  end
 
   files.each { |file| require_relative File.join(tmpdir, lib, file) }
 end
