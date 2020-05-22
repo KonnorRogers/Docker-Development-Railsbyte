@@ -25,7 +25,6 @@ def copy_templates
 
   @files.values.each do |file|
     dest_file = File.join(templates, 'default', file)
-    # hammer :template, file, dest_file, verbose: true
     source_file = ERB.new(File.read(File.join(templates, 'erb', file))).result(binding)
     hammer :create_file, dest_file, source_file
   end

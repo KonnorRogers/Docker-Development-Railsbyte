@@ -77,7 +77,12 @@ COPY --chown=$USER_ID:$GROUP_ID package.json $APP_DIR
 COPY --chown=$USER_ID:$GROUP_ID yarn.lock $APP_DIR
 
 # Fix an issue with outdated bundler
-RUN gem install bundler
+<% if @bundler_version.empty? %>
+  RUN gem install bundler
+<% else %>
+  RUN gem install bundler -v <%= @bundler_version %>
+<% end %>
+
 RUN bundle install
 
 # Copy over all files

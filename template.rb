@@ -60,6 +60,7 @@ end
 def ask_rails_runtime_questions
   @ruby_version = ruby_version_ask(@ruby_version)
   @node_version = node_version_ask(@node_version)
+  @bundler_version = bundler_version_ask(@bundler_version)
   @rails_port = rails_port_ask(@rails_port)
   @webpacker_port = webpacker_port_ask(@webpacker_port)
 end

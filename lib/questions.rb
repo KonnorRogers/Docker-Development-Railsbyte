@@ -28,6 +28,18 @@ def node_version_ask(node_version)
   ask('', default: node_version)
 end
 
+def bundler_version_ask(bundler_version)
+  question = "\nWhat version of Bundler would you like to use?"
+  format = '[2.14, 2.10, etc]'
+  current = "\nWe detected bundler version:"
+  note = "\nMake sure this is the same as the BUNDLED_WITH value in your Gemfile.lock"
+
+  say note, :red
+  str = "#{question} #{format} #{current}"
+  print str
+  ask('', default: bundler_version)
+end
+
 def port_ask(port, service)
   question = "\nWhat port would you like to use for #{service}?"
   format = '[3000, 3035, 8000, 8080, etc]'
