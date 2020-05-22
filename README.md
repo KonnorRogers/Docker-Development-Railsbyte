@@ -50,3 +50,16 @@ themselves.
 `DOCKER_USERNAME` Default: 'user'
 
 `DOCKER_APP_DIR` Default: "home/#{DOCKER_USERNAME}/myapp"
+
+## Updating Default Files
+
+Files can quickly become out of date. I set up a Rake task to remain in
+line with defaults from the `templates/erb/*` files.
+
+Run:
+
+```bash
+rake update_default_templates
+```
+
+To update the files in the `templates/default/` directory.
