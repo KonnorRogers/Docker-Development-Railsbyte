@@ -18,8 +18,6 @@ def set_rails_runtime_defaults
   @node_version = get_env_var(:NODE_VERSION) || '12'
   @bundler_version = get_env_var(:BUNDLER_VERSION) ||
                      Gem::BundlerVersionFinder.bundler_version.to_s
-
-                     p Gem::BundlerVersionFinder.bundler_version.to_s
   @rails_port = get_env_var(:RAILS_PORT) || '3000'
   @webpacker_port = get_env_var(:WEBPACKER_PORT) || '3035'
 end
