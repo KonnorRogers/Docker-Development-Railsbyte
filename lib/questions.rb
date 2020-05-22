@@ -84,7 +84,6 @@ def postgres_password_ask(password)
   # Set echo to false so you cant see the user's password
   postgres_password = ask('', default: password, echo: false)
   set_env_var(:DOCKER_POSTGRES_PASSWORD, postgres_password)
-  print_env_vars
 end
 
 def username_ask(username)
