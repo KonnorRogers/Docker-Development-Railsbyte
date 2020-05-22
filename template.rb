@@ -6,6 +6,7 @@ require 'shellwords'
 RAILS_REQUIREMENT = ['>= 5.2.0', '< 7'].freeze
 RUBY_REQUIREMENT = '>= 2.5.0'
 TEMPLATE_DIR = 'templates'
+@current_dir = File.expand_path(__dir__)
 
 def require_files(tmpdir = nil)
   lib = 'lib'
@@ -37,6 +38,7 @@ def add_template_repository_to_source_path
     if (branch = __FILE__[%r{Docker-Development-Railsbyte/(.+)/template.rb}, 1])
       Dir.chdir(tempdir) { git checkout: branch }
       require_files(tempdir)
+      @current_dir = File.expand_path(tempdir)
     end
   else
     source_paths.unshift(File.dirname(__FILE__))
