@@ -1,7 +1,8 @@
 # Anything delimited by  Will be replaced at with the
 # corresponding value
 # Pre setup stuff
-FROM ruby:2.6.3 as builder
+# This is just to pull down a default ruby with the necessary libraries.
+FROM ruby:2.6 as builder
 
 # Add Yarn to the repository
 RUN curl https://deb.nodesource.com/setup_12.x | bash && \
@@ -12,11 +13,34 @@ RUN curl https://deb.nodesource.com/setup_12.x | bash && \
 # libnotify-dev is what allows you to watch file changes w/ HMR
 RUN apt-get update -qq && apt-get install -y \
     postgresql-client build-essential yarn nodejs \
-    libnotify-dev && \
+    libnotify-dev vim curl git && \
+    tar bzip2 gcc make wget && \
     rm -rf /var/lib/apt/lists/*
+
+# Installs ruby-install to allow for a drop-in version of Ruby
+RUN wget -O ruby-install-0.7.0.tar.gz https://github.com/postmodern/ruby-install/archive/v0.7.0.tar.gz && \
+    tar -xzvf ruby-install-0.7.0.tar.gz && \
+    cd ruby-install* && \
+    make install && \
+    rm -rf ruby-install-0.7.0.tar.gz ruby-install-0.7.0 && \
+    ruby-install --system ruby 2.6.3 -- --disable-install-rdoc
+
+# install chruby
+RUN wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz && \
+    tar -xzvf chruby-0.3.9.tar.gz && \
+    cd chruby-0.3.9 && \
+    make install && \
+    rm -rf chruby-*
+
+# Add chruby system-wide
+RUN echo 'if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
+  source /usr/local/share/chruby/chruby.sh
+  source /usr/local/share/chruby/auto.sh
+fi' >> /etc/profile.d/chruby.sh
 
 # This is where we build the rails app
 FROM builder as rails-app
+
 
 # Allow access to port 3000 & 3035
 EXPOSE 3000
