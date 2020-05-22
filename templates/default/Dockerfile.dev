@@ -41,6 +41,7 @@ fi' >> /etc/profile.d/chruby.sh
 # This is where we build the rails app
 FROM builder as rails-app
 
+RUN chruby ruby-2.6.3
 
 # Allow access to port 3000 & 3035
 EXPOSE 3000

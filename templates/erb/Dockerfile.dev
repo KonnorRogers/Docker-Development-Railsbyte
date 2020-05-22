@@ -41,7 +41,7 @@ fi' >> /etc/profile.d/chruby.sh
 # This is where we build the rails app
 FROM builder as rails-app
 
-RUN chruby ruby-<%= ruby_version %>
+RUN chruby ruby-<%= @ruby_version %>
 
 # Allow access to port 3000 & 3035
 EXPOSE <%= @rails_port %>
